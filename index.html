@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Crush ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background: #ffeaf2;
+            color: #e85d91;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 35px 18px;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: appear .6s ease;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: clamp(25px, 6vw, 38px);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 15px 0;
+        }
+
+        p {
+            line-height: 1.7;
+        }
+
+        .emoji {
+            font-size: 75px;
+            margin: 15px;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 13px 27px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        .yes {
+            background: #62c99b;
+            color: white;
+        }
+
+        .no {
+            background: #ed647c;
+            color: white;
+        }
+
+        .main-yes {
+            font-size: 55px;
+            padding: 25px 65px;
+            border-radius: 20px;
+        }
+
+        .gift-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(85px, 120px));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .gift {
+            background: #ffc5da;
+            color: #e64e87;
+            padding: 20px 8px;
+            border-radius: 15px;
+            box-shadow: 0 5px 12px #eaa9c3;
+        }
+
+        .gift span {
+            display: block;
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            width: min(100%, 400px);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px #e9b5ca;
+            margin: 15px auto;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .memory-grid img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border: 7px solid white;
+            box-shadow: 0 5px 15px #e9b5ca;
+            border-radius: 12px;
+        }
+
+        .music-box {
+            background: #ffc4d9;
+            border-radius: 20px;
+            padding: 20px;
+            width: min(100%, 350px);
+        }
+
+        .record {
+            font-size: 90px;
+            animation: spin 5s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+
+        .letter {
+            background: linear-gradient(135deg,
+                    #fff0f5,
+                    #ffffff,
+                    #ffe0eb);
+
+            border: 2px solid #ffc1d6;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 25px #e9a8c5;
+            color: #b94c78;
+            line-height: 2;
+            text-align: left;
+            width: min(100%, 420px);
+        }
+
+        .letter h2 {
+            text-align: center;
+            color: #e85d91;
+            margin-bottom: 20px;
+        }
+
+        .letter p {
+            font-size: 15px;
+            white-space: pre-line;
+        }
+
+        .back {
+            background: #f46e9c;
+            color: white;
+            margin-top: 25px;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 20px;
+            pointer-events: none;
+            animation: floatUp 5s linear forwards;
+            z-index: 10;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media(max-width: 380px) {
+            .gift-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .gift {
+                font-size: 13px;
+                padding: 15px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SCREEN 1: QUESTION -->
+    <section class="screen active" id="question">
+
+        <div class="emoji">🥺</div>
+
+        <h1>Do you love me? ❤️</h1>
+        <p>I have something to ask you...</p>
+
+        <div class="buttons">
+            <button class="yes" onclick="firstYes()">YES 💗</button>
+            <button class="no" onclick="sayNo()">NO 💔</button>
+        </div>
+
+        <p id="message" style="margin-top:25px;"></p>
+    </section>
+
+    <!-- SCREEN 2: RETRY -->
+    <section class="screen" id="retry">
+
+        <div class="emoji">🥹</div>
+
+        <h1>Try Again!</h1>
+        <p>Are you really sure? 🥺</p>
+
+        <div class="buttons">
+            <button class="yes" onclick="finalQuestion()">YES 💚</button>
+            <button class="no" onclick="sayNo()">NO 😭</button>
+        </div>
+    </section>
+
+    <!-- SCREEN 3: FINAL YES -->
+    <section class="screen" id="final">
+
+        <div class="emoji">🥰</div>
+
+        <h1>I knew you'd say YES 💕</h1>
+
+        <p>You just made me the happiest person!</p>
+
+        <button class="yes main-yes" onclick="openGifts()">
+            YES ❤️
+        </button>
+
+    </section>
+
+    <!-- SCREEN 4: GIFTS -->
+    <section class="screen" id="gifts">
+
+        <div class="emoji">💝</div>
+
+        <h1>I have something for you!</h1>
+        <p>Choose your gifts, my special person ❤️</p>
+
+        <div class="gift-container">
+
+            <button class="gift" onclick="showScreen('memories')">
+                <span>🎁</span>
+                GIFT 1
+            </button>
+
+            <button class="gift" onclick="showScreen('music')">
+                <span>🎁</span>
+                GIFT 2
+            </button>
+
+            <button class="gift" onclick="showScreen('letter')">
+                <span>🎁</span>
+                GIFT 3
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- SCREEN 5: MEMORIES -->
+    <section class="screen" id="memories">
+
+        <div class="emoji">📸</div>
+
+        <h1>Our Memories 💗</h1>
+
+        <p>Every little moment is special.</p>
+
+        <div class="card">
+
+
+            <div class="memory-grid">
+                <img src="images/photo1.jpg" alt="Memory 1">
+                <img src="images/photo2.jpg" alt="Memory 2">
+                <img src="images/photo3.jpg" alt="Memory 3">
+                <img src="images/photo4.jpg" alt="Memory 4">
+            </div>
+
+            <p>Hope we make many more memories together. 💞</p>
+
+        </div>
+
+        <button class="back" onclick="showScreen('gifts')">BACK</button>
+
+    </section>
+
+    <!-- SCREEN 6: MUSIC -->
+
+    <section class="screen" id="music">
+
+        <div class="emoji">🎵</div>
+
+        <h1>A Song For You ❤️</h1>
+
+        <div class="music-box">
+
+            <div class="record">💿</div>
+
+            <h2>Our Special Song 💗</h2>
+
+            <p>Every song reminds me of you 🥰</p>
+
+            <iframe width="100%" height="220" src="https://www.youtube.com/embed/0IbxoC0achc" title="Our Special Song"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+        <button class="back" onclick="showScreen('gifts')">
+            BACK
+        </button>
+
+    </section>
+    <div class="record">💿</div>
+
+    <h2>Our Special Song</h2>
+
+
+
+    <!-- SCREEN 7: LOVE LETTER -->
+
+    <section class="screen" id="letter">
+
+        <div class="emoji">💌</div>
+
+        <h1>A Letter From My Heart ❤️</h1>
+
+        <div class="letter">
+
+            <h2>Dear My Love, 💗</h2>
+
+            <p>
+                Babe လေးရေ
+
+
+                မင်းကို ပြောပြချင်တဲ့ စကားလေးတွေ
+                ငါ့ရင်ထဲမှာ အကြာကြီး သိမ်းထားခဲ့တယ်။
+
+                <br><br>
+
+                မင်းရဲ့အပြုံးလေးတွေက
+                ငါ့ရဲ့နေ့ရက်တွေကို ပိုပြီးလှပစေတယ်။
+                မင်းပျော်နေတာကို မြင်ရရင်
+                ငါလည်း အလိုလို ပျော်ရွှင်မိတယ်။
+
+                <br><br>
+
+                မင်းကို ဘယ်လောက်ချစ်တယ်ဆိုတာ
+                စကားလုံးတွေနဲ့ အပြည့်အဝ ဖော်ပြဖို့
+                မလွယ်ကူဘူး။
+
+                <br><br>
+
+                ဒါပေမဲ့ တစ်ခုတော့ သိစေချင်တယ်။
+                မင်းဟာ ငါ့အတွက် အရမ်းကို
+                အဖိုးတန်တဲ့သူလေးပါ။
+
+                <br><br>
+
+                မင်းရဲ့အပြုံးလေးတွေကို အမြဲမြင်ချင်တယ်။
+                မင်းရဲ့ပျော်ရွှင်မှုလေးတွေမှာ
+                ငါလည်း ပါဝင်ခွင့်ရချင်တယ်။
+
+                <br><br>
+
+                **I LOVE YOU SO MUCH. ❤️**
+
+                <br><br>
+
+                မင်းကို အမြဲချစ်နေမယ့်သူ၊
+
+                <br>
+
+                <b>Yours Forever 💕</b>
+            </p>
+
+        </div>
+
+        <button class="back" onclick="showScreen('gifts')">
+            BACK ❤️
+        </button>
+
+    </section>
+
+    <script>
+
+        // Change between screens
+        function showScreen(screenId) {
+
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            document.getElementById(screenId).classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        // NO button
+        let noCount = 0;
+
+        function sayNo() {
+
+            noCount++;
+
+            const messages = [
+                "Are you sure? 🥺",
+                "Please think again! 💗",
+                "Don't break my heart 😭",
+                "One more chance? ❤️"
+            ];
+
+            document.getElementById('message').innerText =
+                messages[(noCount - 1) % messages.length];
+
+            if (noCount >= 2) {
+                showScreen('retry');
+            }
+        }
+
+        // First YES
+        function firstYes() {
+            showScreen('retry');
+        }
+
+        // Final question
+        function finalQuestion() {
+            showScreen('final');
+        }
+
+        // Open gifts
+        function openGifts() {
+            showScreen('gifts');
+            startHearts();
+        }
+
+        // Floating hearts animation
+        function startHearts() {
+
+            setInterval(() => {
+
+                const heart = document.createElement('div');
+
+                heart.className = 'heart';
+                heart.innerHTML = ['❤️', '💕', '💗', '💖'][
+                    Math.floor(Math.random() * 4)
+                ];
+
+                heart.style.left = Math.random() * 100 + 'vw';
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+
+            }, 500);
+        }
+
+    </script>
+
+</body>
+
+</html>
